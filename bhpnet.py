@@ -39,6 +39,7 @@ def main():
     global target
 
     print "start"
+    print sys.argv[1:]
     if not len(sys.argv[1:]):
         usage()
 
@@ -46,6 +47,9 @@ def main():
         opts, args = getopt.getopt(sys.argv[1:], "hle:t:p:cu:", ["help", "listen", "execute", "target", "port", "command","upload"])
     except getopt.GetoptError as err:
         print str(err)
+        usage()
+
+    if not len(opts):
         usage()
 
     for o,a in opts:
@@ -65,6 +69,7 @@ def main():
             port = int(a)
         else:
             assert False, "Unhandled Option"
+    
 
     if not listen and len(target) and port >0:
         buffer = sys.stdin.read()
@@ -73,3 +78,20 @@ def main():
 
     if listen :
         server_loop()
+
+
+def client_sender(buffer):
+    print "in client_sender"
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+def server_loop():
+    print "in server_loop"
+
+def run_command(command):
+    print "in run_command"
+
+
+def client_handler(client_socket):
+    print "in client_handler"
+
+main()
