@@ -72,8 +72,8 @@ def main():
 
 
     if not listen and len(target) and port >0:
+        print "in cliend sender"
         buffer = sys.stdin.read()
-
         client_sender(buffer)
 
     if listen :
@@ -123,7 +123,9 @@ def server_loop():
 
     while True:
         client_socket, addr = server.accept()
-
+        print "-------------"
+        print client_socket
+        print addr
         client_thread = threading.Thread(target=client_handler,args=(client_socket,))
         client_thread.start()
 
@@ -131,8 +133,10 @@ def server_loop():
 def run_command(command):
     print "in run_command"
     command = command.rstrip()
+    print command
     try:
         output = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
+        print output
     except:
         output = "Failed to execute command!"
 
